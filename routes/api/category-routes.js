@@ -69,8 +69,38 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
+  try {
+    // find all the products associated with the category
+    const productsToDelete = await Product.findAll({
+      where: {
+        category_id: req.params.id
+      }
+    });
+    // delete all the products associated with the category
+    if(productsToDelete) {
+      for (const product of productsToDelete) {
+        await Product.destroy({
+          where: {
+            id: product.dataValues.id
+          }
+        })
+      };
+    };
+    const categoryToDelete = await Category.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (!categoryToDelete) {
+      res.status(404).json("The category you are tying to delete doesn't exist")
+    } else {
+      res.status(200).json(categoryToDelete)
+    }
+  } catch (err) {
+    res.status(400).json(err)
+  }
 });
 
 module.exports = router;
