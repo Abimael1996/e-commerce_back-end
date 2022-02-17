@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
       ]
     });
     if (!tagsData) {
-      res.status(400).json("No tags found");
+      res.status(404).json("No tags found");
     } else {
       res.status(200).json(tagsData);
     }
@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
       ]
     });
     if(!tagData) {
-      res.status(400).json("Tag doesn't exist")
+      res.status(404).json("Tag doesn't exist")
     } else {
       res.status(200).json(tagData)
     }

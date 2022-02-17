@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
       ]
     });
     if(!productsData) {
-      res.status(400).json("No products found")
+      res.status(404).json("No products found")
     } else {
       res.status(200).json(productsData);
     }
@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
       ]
     });
     if(!productData) {
-      res.status(400).json("Product not found")
+      res.status(404).json("Product not found")
     } else {
       res.status(200).json(productData);
     }
@@ -140,7 +140,7 @@ router.delete('/:id', async (req, res) => {
       }
     });
     if(!deletedProduct) {
-      res.status(400).json("The product you are tying to delete doesn't exist")
+      res.status(404).json("The product you are tying to delete doesn't exist")
     } else {
       res.status(200).json(deletedProduct);
     }
